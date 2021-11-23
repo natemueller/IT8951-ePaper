@@ -1,6 +1,6 @@
 #include "example.h"
 
-#include <time.h> 
+#include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -129,7 +129,7 @@ UBYTE Display_CharacterPattern_Example(UWORD Panel_Width, UWORD Panel_Height, UD
 	Epd_Mode(epd_mode);
     Paint_SetBitsPerPixel(BitsPerPixel);
     Paint_Clear(WHITE);
-    
+
 
     for(int y=20; y<Display_Area_Height - Display_Area_Sub_Height; y += Display_Area_Sub_Height )//To prevent arrays from going out of bounds
     {
@@ -208,33 +208,24 @@ UBYTE Display_BMP_Example(UWORD Panel_Width, UWORD Panel_Height, UDOUBLE Init_Ta
     Paint_Clear(WHITE);
 
     char Path[30];
-    sprintf(Path,"./pic/%dx%d_0.bmp", WIDTH, HEIGHT);
+    sprintf(Path,"/tmp/img.bmp");//, WIDTH, HEIGHT);
 
     GUI_ReadBmp(Path, 0, 0);
 
-    //you can draw your character and pattern on the image, for color definition of all BitsPerPixel, you can refer to GUI_Paint.h, 
-    //Paint_DrawRectangle(50, 50, WIDTH/2, HEIGHT/2, 0x30, DOT_PIXEL_3X3, DRAW_FILL_EMPTY);
-    //Paint_DrawCircle(WIDTH*3/4, HEIGHT/4, 100, 0xF0, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
-    //Paint_DrawNum(WIDTH/4, HEIGHT/5, 709, &Font20, 0x30, 0xB0);
-
     switch(BitsPerPixel){
         case BitsPerPixel_8:{
-            Paint_DrawString_EN(10, 10, "8 bits per pixel 16 grayscale", &Font24, 0xF0, 0x00);
             EPD_IT8951_8bp_Refresh(Refresh_Frame_Buf, 0, 0, WIDTH,  HEIGHT, false, Init_Target_Memory_Addr);
             break;
         }
         case BitsPerPixel_4:{
-            Paint_DrawString_EN(10, 10, "4 bits per pixel 16 grayscale", &Font24, 0xF0, 0x00);
             EPD_IT8951_4bp_Refresh(Refresh_Frame_Buf, 0, 0, WIDTH,  HEIGHT, false, Init_Target_Memory_Addr,false);
             break;
         }
         case BitsPerPixel_2:{
-            Paint_DrawString_EN(10, 10, "2 bits per pixel 4 grayscale", &Font24, 0xC0, 0x00);
             EPD_IT8951_2bp_Refresh(Refresh_Frame_Buf, 0, 0, WIDTH,  HEIGHT, false, Init_Target_Memory_Addr,false);
             break;
         }
         case BitsPerPixel_1:{
-            Paint_DrawString_EN(10, 10, "1 bit per pixel 2 grayscale", &Font24, 0x80, 0x00);
             EPD_IT8951_1bp_Refresh(Refresh_Frame_Buf, 0, 0, WIDTH,  HEIGHT, A2_Mode, Init_Target_Memory_Addr,false);
             break;
         }
@@ -280,7 +271,7 @@ UBYTE Dynamic_Refresh_Example(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memo
     }
 
     clock_t Dynamic_Area_Start, Dynamic_Area_Finish;
-    double Dynamic_Area_Duration;  
+    double Dynamic_Area_Duration;
 
     while(1)
     {
@@ -508,7 +499,7 @@ UBYTE Check_FrameRate_Example(UWORD Panel_Width, UWORD Panel_Height, UDOUBLE Tar
 					EPD_IT8951_8bp_Refresh(Refresh_FrameRate_Buf, 1280-Frame_Rate_Test_Width, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr);
 				else if(epd_mode == 1)
 					EPD_IT8951_8bp_Refresh(Refresh_FrameRate_Buf, 1872-Frame_Rate_Test_Width-16, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr);
-				else					
+				else
 					EPD_IT8951_8bp_Refresh(Refresh_FrameRate_Buf, 0, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr);
                 break;
             }
@@ -526,7 +517,7 @@ UBYTE Check_FrameRate_Example(UWORD Panel_Width, UWORD Panel_Height, UDOUBLE Tar
 					EPD_IT8951_2bp_Refresh(Refresh_FrameRate_Buf, 1280-Frame_Rate_Test_Width, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr,false);
 				else if(epd_mode == 1)
 					EPD_IT8951_2bp_Refresh(Refresh_FrameRate_Buf, 1872-Frame_Rate_Test_Width-16, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr,false);
-				else	
+				else
 					EPD_IT8951_2bp_Refresh(Refresh_FrameRate_Buf, 0, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, false, Target_Memory_Addr,false);
                 break;
             }
@@ -535,7 +526,7 @@ UBYTE Check_FrameRate_Example(UWORD Panel_Width, UWORD Panel_Height, UDOUBLE Tar
 					EPD_IT8951_1bp_Refresh(Refresh_FrameRate_Buf, 1280-Frame_Rate_Test_Width, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, A2_Mode, Target_Memory_Addr,false);
 				else if(epd_mode == 1)
 					EPD_IT8951_1bp_Refresh(Refresh_FrameRate_Buf, 1872-Frame_Rate_Test_Width-16, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, A2_Mode, Target_Memory_Addr,false);
-				else	
+				else
 					EPD_IT8951_1bp_Refresh(Refresh_FrameRate_Buf, 0, 0, Frame_Rate_Test_Width,  Frame_Rate_Test_Height, A2_Mode, Target_Memory_Addr,false);
                 break;
             }
@@ -803,26 +794,26 @@ void Factory_Test_Only(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memory_Addr
     {
         for(int i=0; i < 4; i++){
 			EPD_IT8951_SystemRun();
-			
+
 			EPD_IT8951_Clear_Refresh(Dev_Info, Init_Target_Memory_Addr, GC16_Mode);
             // BMP_Test(Dev_Info.Panel_W, Dev_Info.Panel_H, Init_Target_Memory_Addr, BitsPerPixel_1, i);
             // BMP_Test(Dev_Info.Panel_W, Dev_Info.Panel_H, Init_Target_Memory_Addr, BitsPerPixel_2, i);
             BMP_Test(Dev_Info.Panel_W, Dev_Info.Panel_H, Init_Target_Memory_Addr, BitsPerPixel_4, i);
             // BMP_Test(Dev_Info.Panel_W, Dev_Info.Panel_H, Init_Target_Memory_Addr, BitsPerPixel_8, i);
 			EPD_IT8951_Clear_Refresh(Dev_Info, Init_Target_Memory_Addr, GC16_Mode);
-			
+
 			EPD_IT8951_Sleep();
 			DEV_Delay_ms(5000);
         }
 		EPD_IT8951_SystemRun();
-		
+
 		EPD_IT8951_Clear_Refresh(Dev_Info, Init_Target_Memory_Addr, A2_Mode);
         Dynamic_Refresh_Example(Dev_Info,Init_Target_Memory_Addr);
 		EPD_IT8951_Clear_Refresh(Dev_Info, Init_Target_Memory_Addr, A2_Mode);
-		
-		if(isColor) 
+
+		if(isColor)
 			Color_Test(Dev_Info, Init_Target_Memory_Addr);
-		
+
 		EPD_IT8951_Sleep();
 		DEV_Delay_ms(5000);
     }
@@ -831,8 +822,8 @@ void Factory_Test_Only(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memory_Addr
 void Color_Test(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memory_Addr)
 {
 	PAINT_TIME Time = {2020, 9, 30, 18, 10, 34};
-	
-	while(1) 
+
+	while(1)
 	{
 		UWORD Panel_Width = Dev_Info.Panel_W;
 		UWORD Panel_Height = Dev_Info.Panel_H;
@@ -855,11 +846,11 @@ void Color_Test(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memory_Addr)
 			Paint_DrawRectangle(100, 100, 300, 300, 0x0f00, DOT_PIXEL_1X1, DRAW_FILL_FULL);	//Red
 			Paint_DrawRectangle(100, 400, 300, 600, 0x00f0, DOT_PIXEL_1X1, DRAW_FILL_FULL);	//Green
 			Paint_DrawRectangle(100, 700, 300, 900, 0x000f, DOT_PIXEL_1X1, DRAW_FILL_FULL);	//Bule
-			
+
 			Paint_DrawCircle(500, 200, 100, 0x00ff, DOT_PIXEL_1X1, DRAW_FILL_FULL);
 			Paint_DrawCircle(500, 500, 100, 0x0f0f, DOT_PIXEL_1X1, DRAW_FILL_FULL);
 			Paint_DrawCircle(500, 800, 100, 0x0ff0, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-			
+
 			Paint_DrawLine(1000, 200, 1100, 200, 0x055a, 10, LINE_STYLE_SOLID);
 			Paint_DrawLine(1000, 300, 1100, 300, 0x05a5, 20, LINE_STYLE_SOLID);
 			Paint_DrawLine(1000, 400, 1100, 400, 0x0a55, 30, LINE_STYLE_SOLID);
@@ -880,7 +871,7 @@ void Color_Test(IT8951_Dev_Info Dev_Info, UDOUBLE Init_Target_Memory_Addr)
 		}
 
 		EPD_IT8951_4bp_Refresh(Refresh_Frame_Buf, 0, 0, Panel_Width,  Panel_Height, false, Init_Target_Memory_Addr, false);
-		
+
 		if(Refresh_Frame_Buf != NULL) {
 			free(Refresh_Frame_Buf);
 			Refresh_Frame_Buf = NULL;
