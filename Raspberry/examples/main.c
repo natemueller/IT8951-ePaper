@@ -66,12 +66,10 @@ int main(int argc, char *argv[])
   Paint_SetRotate(ROTATE_0);
   Paint_SetMirroring(MIRROR_HORIZONTAL);
   Paint_SetBitsPerPixel(4);
-  Paint_Clear(WHITE);
 
   GUI_ReadBmp(argv[2], 0, 0);
 
-  EPD_IT8951_4bp_Refresh(Refresh_Frame_Buf, 0, 0, Panel_Width, Panel_Height, false, Init_Target_Memory_Addr, false);
-  DEV_Delay_ms(5000);
+  EPD_IT8951_4bp_Refresh(Refresh_Frame_Buf, 0, 0, Panel_Width, Panel_Height, true, Init_Target_Memory_Addr, false);
 
   free(Refresh_Frame_Buf);
   EPD_IT8951_Sleep();
